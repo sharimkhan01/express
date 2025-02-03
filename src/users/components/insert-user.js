@@ -1,13 +1,16 @@
-const db = require('../../utils/db');
 
-const insertUser = (callback, body) => {
-    db.query('INSERT INTO employee SET ?', body,(error, results) => {
-        if (error) {
-            callback(error, null);
-        } else {
-            callback(null, results);
+const insertUser = require('../models/insert-user-model');
+
+const insertRoute = (req,res)=>{
+    const body = req.body;
+    insertUser( (error, results) => {
+        if(error){
+            console.log(error);
+            res.status(404).send('Cannot insert data');
+        }else{
+            res.json(results);
         }
-    });
-};
+    },body);
+}
 
-module.exports = insertUser;
+module.exports = insertRoute;

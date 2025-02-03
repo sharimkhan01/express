@@ -1,13 +1,18 @@
-const db = require('../../utils/db');
+const deleteUser = require('../models/delete-user-model');
 
-const deleteUser = (callback, id) => {
-    db.query('DELETE FROM employee WHERE id = ?', [id], (error, results) => {
-        if (error) {
-            callback(error, null);
-        } else {
-            callback(null, results);
-        }
-    });
+const deleteRouter = (req,res) => {
+  {
+    const id = req.params.id;
+    deleteUser((error, results) => {
+      if (error) {
+        console.log(error);
+        res.status(404).send("Cannot delete user");
+      } else {
+        res.status(200).send("Delete user successful");
+        res.json(results);
+      }
+    }, id);
+  }
 };
 
-module.exports = deleteUser;
+module.exports = deleteRouter;

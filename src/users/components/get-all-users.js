@@ -1,27 +1,15 @@
-////////////////////// Redundant Code ///////////////////////////////
-// const getAllUsers = (callback) => {
-//     db.query('SELECT * FROM employee', (error, results) => {
-//         if (error) {
-//             callback(error, null);
-//         } else {
-//             callback(null, results);
-//         }
-//     });
-// };
-/////////////////////////////////////////////////////////////////////
+const getAllUsers = require('../models/get-all-user-model');
 
-const db = require('../../utils/db');
-
-const getAllUsers = () => {
-    return new Promise((resolve, reject) => {
-        db.query('SELECT * FROM employee', (error, results) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve(results);
-            }
-        });
+const getAllRoute = (req,res) => {
+{
+    getAllUsers()
+    .then((results) => {
+        // console.log('Users:', results);
+        res.status(200).json(results);
+    })
+    .catch((error) => {
+        console.error('Error fetching users:', error);
     });
-};
-
-module.exports = getAllUsers;
+}
+}
+module.exports = getAllRoute;
